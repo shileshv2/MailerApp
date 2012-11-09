@@ -12,18 +12,14 @@ class LoginController < ApplicationController
 
      if @user.nil?
         flash[:alert] = "Invalid user"
-        #redirect_to :root
         render :template => "/login/index"
       else
-        #flash[:notice] = "Sucessfully logged in"
         if @user.password_correct?(params[:user][:password])
-          puts " matching"
           session[:user] = @user
           session[:user_id] = @user.id
           render :template => "users/#{@user.user_type}"
         else  
           flash[:alert] = "Username/password do not match"
-          puts "not matching"
           redirect_to root_path, :alert => "Username/password do not match"
         end
       end

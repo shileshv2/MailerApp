@@ -13,7 +13,7 @@ end
 
 
 def show
-   @user = User.find(:all)
+   @users = User.find(:all)
 
 end
 
@@ -23,15 +23,14 @@ def new
 end
 
 def create
-   @user = User.new(params[:user]) 
-
-    
+    @user = User.new(params[:user]) 
     @user.salt = @user.generate_salt
-     @user.password = @user.encrypt_password(params[:user][:password])
-     @user.password_confirmation = @user.encrypt_password(params[:user][:password_confirmation])
+    @user.password = @user.encrypt_password(params[:user][:password])
+    @user.password_confirmation = @user.encrypt_password(params[:user][:password_confirmation])
 
     respond_to do |format|  
       if @user.save 
+        flash[:notice] = "Registered Successfully"
         format.html { redirect_to root_path, :notice => "Registered successfully" }
       else
         format.html { render :action => "new" }  # doesn't execute the new method
@@ -42,19 +41,14 @@ end
 def save_password
   @user = User.find(params[:id])
   unless params[:update_user].blank?
-
-    #if (@user.password.to_s.eql?(params[:update_user][:old_password].to_s) && 
-    if (@user.password_correct?(params[:update_user][:old_password]) &&
-      params[:update_user][:new_password].eql?(params[:update_user][:confirm_password]))
-      puts "password matched"
-       if @user.update_attributes(:password => @user.encrypt_password(params[:update_user][:new_password]))
+    if (@user.password_correct?(params[:update_user][:old_password]) && params[:update_user][:new_password].eql?(params[:update_user][:confirm_password]))
+      if @user.update_attributes(:password => @user.encrypt_password(params[:update_user][:new_password]))
         flash.now[:notice]="Password Changed Successfully"
         render :template => "/users/guest"
       else 
         puts "unable to save password"
       end
     else
-      puts "password doesn't match"
       flash.now[:notice] = "Password doesn't match" 
       render :template => "/users/change_password"
     end 

@@ -11,7 +11,7 @@
 		<% if session[:user].user_type == 'admin' 
 			id = "admin_wrapper" 
 		   elsif session[:user].user_type == 'guest'
-			 id="guest_wrapper"
+			 id = "guest_wrapper"
 		   end 
 		%>
 		<body id = <%= id %>>
@@ -19,9 +19,9 @@
 			<%= session[:user].user_name %>
 			<%= link_to 'Logout', :controller => 'login', :action => 'logout' %>
 		</div>
-	</body>	
 	<% end %>
 	<%= yield%>
+	</body>
 </div>
 
 

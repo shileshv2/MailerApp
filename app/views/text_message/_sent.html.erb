@@ -1,11 +1,6 @@
-
-
-
-	<% form_tag ({:controller => 'text_message', :action => 'send_email'}) do -%>
-
+<% form_tag ({:controller => 'text_message', :action => 'send_email'}) do -%>
 	<% if @user.empty? %>
-
-	<p> No users </p> 
+		<p> No users </p> 
 	<% else %>
 		<% @user.each_with_index do |user, i| %>
   			<p><label id="name<%=i%>" > <%= user.first_name %>
@@ -13,4 +8,4 @@
 			<% end %>
 		<%= submit_tag 'Send' %>
 	<% end %>
-	<% end %>
+<% end %>
