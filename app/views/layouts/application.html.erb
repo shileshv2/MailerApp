@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Birthday Mailer</title>
+<%= stylesheet_link_tag 'global' if params %>
+<%= javascript_include_tag :defaults %>
+<%= javascript_include_tag "global.js" %>
+</head>
+
+	<% if session[:user_id] %>
+		<% if session[:user].user_type == 'admin' 
+			id = "admin_wrapper" 
+		   elsif session[:user].user_type == 'guest'
+			 id="guest_wrapper"
+		   end 
+		%>
+		<body id = <%= id %>>
+		<div id="logout">
+			<%= session[:user].user_name %>
+			<%= link_to 'Logout', :controller => 'login', :action => 'logout' %>
+		</div>
+	</body>	
+	<% end %>
+	<%= yield%>
+</div>
+
+
+</html>
+

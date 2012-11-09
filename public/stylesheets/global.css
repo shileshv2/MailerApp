@@ -1,0 +1,52 @@
+body#admin_wrapper {
+	background-color: gray;
+	color: white;
+	height: 100%;
+}
+
+
+body#guest_wrapper {
+	background-color: #FFDDCA;
+	color: #665544;	
+}
+
+#content {
+	font-family: Arial, Verdana, sans-serif;
+	text-align: center;
+	font-size : 16px;	
+}
+
+
+#template_partial {
+	border: 2px solid;
+	width: 45%;
+	position: absolute;
+}
+
+#userlist_partial {
+	float: right;
+	width: 50%;
+	border: 2px solid;
+	padding-bottom: 20px;
+	margin-top: 50px;
+}
+
+#errormessage, #alert { 
+    color: red;
+    font-style: bold;
+}
+
+#notice {
+   color: green;
+}
+
+#logout {
+	text-align: right;
+}
+
+div#status {
+	position: relative;
+	top: 10px;
+	left: 400px;
+}
+

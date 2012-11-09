@@ -1,0 +1,16 @@
+
+
+
+	<% form_tag ({:controller => 'text_message', :action => 'send_email'}) do -%>
+
+	<% if @user.empty? %>
+
+	<p> No users </p> 
+	<% else %>
+		<% @user.each_with_index do |user, i| %>
+  			<p><label id="name<%=i%>" > <%= user.first_name %>
+			<%= check_box_tag "name[]", user.id, true %></label></p>
+			<% end %>
+		<%= submit_tag 'Send' %>
+	<% end %>
+	<% end %>

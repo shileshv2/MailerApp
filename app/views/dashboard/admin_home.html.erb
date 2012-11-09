@@ -1,0 +1,8 @@
+<body>
+<h2> 	Welcome to Admin Home Page </h2>
+  <% form_tag( {:controller => 'text_message', :action => 'send_email'}) do %>
+  <p><label>Subject <br/><%= text_field :text_message_template, :subject, :value => "Best Wishes!"  %></label></p>
+  <p><%= text_area :text_message_template, :body, :value => "Hope your birthday blossoms into lots of dreams come true. Happy Birthday!!!" %></p>
+  <p> <%= submit_tag "Send Email" %> </p>
+  <% end %>
+</body>

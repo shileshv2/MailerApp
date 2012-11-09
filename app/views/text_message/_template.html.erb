@@ -1,0 +1,12 @@
+
+<p id='notice'><%= notice %></p>
+<h2> Message Template </h2>
+  <% form_tag(:action => 'save') do %>
+  <p>
+  	<label>Subject <br/>
+  		<%= text_field :text_message_template, :subject, :value => @message.text_message_subject %>
+  	</label>
+  </p>
+  <p><%= text_area :text_message_template, :body, :value => @message.text_message_body %></p>
+  <p> <%= submit_tag "Save" %> </p>
+  <% end %>

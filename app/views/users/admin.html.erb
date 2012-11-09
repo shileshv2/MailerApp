@@ -1,0 +1,9 @@
+
+<div id="content">
+	<p id="notice">
+		<%= notice %>
+	</p>
+	<h2>Admin Home Page</h2>
+	<%= link_to "Manage Users", users_path %> <br/>
+	<%= link_to "Mail Template", {:controller => 'text_message', :action => 'index'} %>
+</div>

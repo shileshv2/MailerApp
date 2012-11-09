@@ -1,0 +1,18 @@
+<div id="results_partial">
+	<% form_tag ({:controller => 'text_message', :action => 'send_email'},{:onsubmit => "gettemplate();"}) do -%>
+
+	<% if @user.empty? %>
+
+	<p> No users </p> 
+	<% else %>
+		<% @user.each_with_index do |user, i| %>
+  			<p>
+  				<label id="name<%=i%>" > 
+  					<%= user.first_name %>
+				</label>
+			</p>
+			<% end %>
+		<%= submit_tag 'Send' %>
+	<% end %>
+	<% end %>
+</div>

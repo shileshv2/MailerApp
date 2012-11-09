@@ -1,0 +1,18 @@
+<div id="content">
+<table>
+<tr>
+	<th>First Name</th>
+	<th>Email</th>
+	<th>Birthdate</th>
+</tr>
+<% @user.each { |usr| %>
+<tr>
+	<td><%= usr.first_name %></td>
+	<td><%= usr.email %> </td>
+	<td><%= usr.birthdate %></td>
+	<td><%= link_to "edit"  %> </td>
+	<td><%= link_to "delete" %> </td>
+</tr>
+<% } %>
+</table>
+</div>

@@ -1,0 +1,5 @@
+<body>
+  <h2> Welcome <%= session[:user].user_name %> </h2>
+  <%= link_to 'Edit Profile', {:controller => 'users', :action => 'edit'} %>
+  <%= link_to 'Change Password', {:controller => 'users', :action => 'change_password'} %>
+</body>

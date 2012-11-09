@@ -1,0 +1,15 @@
+<div id="content">
+<p id="notice"><%= flash[:notice] %></p>
+<p id="alert"><%= flash[:alert] %></p>
+<% form_tag({:action => 'perform_login'}, :id => 'login_form', :method => :POST) do %>
+
+<h1 > Sign in </h1>
+
+<p><label>Username<br/> <%= text_field :user, :user_name %></label> <br/></p>
+<p><label>Password<br/> <%= password_field :user, :password %></label></p>
+<%= submit_tag 'Login' %>
+<% end %>
+<br/><br/>
+New User? <%= link_to "Sign Up Now!", new_users_path %>
+
+</div>
