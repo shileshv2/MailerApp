@@ -1,8 +1,6 @@
 class TextMessageController < ApplicationController
 before_filter :authorize, :only => [:index, :send_email]
-before_filter :init, :only => [:send_wish]
-
-
+before_filter :init, :only => [:index, :send_email]
 
 def authorize
  	unless User.find_by_id(session[:user_id])
@@ -14,25 +12,16 @@ def authorize
   end
 end
 
-
-
-
 def init
   @message = TextMessageTemplate.find(:first)
-  @user = User.find(:all, :conditions => ["MONTH(birthdate)=? AND DAY(birthdate) = ?", Date.today.month, Date.today.day]); 
+  @users = User.find(:all, :conditions => ["MONTH(birthdate)=? AND DAY(birthdate) = ?", Date.today.month, Date.today.day]); 
 end
 
-
-  
 def index 
-  @message = TextMessageTemplate.find(:first)
-
   if @message.nil?
     @message = TextMessageTemplate.new
   end
 end
-
-
 
 def save
   template = TextMessageTemplate.find(:first)
@@ -61,12 +50,12 @@ def sendwish(userid)
 
   if user.hasBday_today?
     begin
-      Notifier.deliver_message(t.text_message_subject, body, usr)
-      htmltext += usr.first_name
+      Notifier.deliver_message(@message.text_message_subject, body, user)
+      htmltext += user.first_name
       htmltext += "- pass<br/>"
       flash[:notice] = "Mail sent Successfully"
     rescue Exception => e
-      htmltext += usr.first_name
+      htmltext += user.first_name
       htmltext += "- <span style='color:red;font-weight: bold'> fail </span><br/>"
       flash[:error] = e.message
     end
@@ -75,8 +64,6 @@ def sendwish(userid)
  
   redirect_to :back
 end
-
-
 
 def send_email
   selections = params[:chkbox_ids]
@@ -88,5 +75,6 @@ def send_email
       end
     }
   end
+end
 end
 

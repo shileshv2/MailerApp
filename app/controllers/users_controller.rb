@@ -1,4 +1,8 @@
+require 'Encryption'
+
 class UsersController < ApplicationController
+ 
+
 before_filter :authorize, :only => [:show]
 
 def authorize
@@ -11,19 +15,9 @@ def authorize
   end
 end
 
-
 def index 
      @users = User.find(:all)
 end
-
-
-
-def show
-
-
-end
-
-
 
 def new
   @user = User.new
@@ -48,19 +42,19 @@ end
 
 
 def create
-    @user = User.new(params[:user]) 
-    @user.salt = @user.generate_salt
-    @user.password = @user.encrypt_password(params[:user][:password])
-    @user.password_confirmation = @user.encrypt_password(params[:user][:password_confirmation])
+  @user = User.new(params[:user]) 
+  @user.salt = Encryption.generate_salt
+  @user.password = Encryption.encrypt_password(params[:user][:password], @user.salt)
+  @user.password_confirmation = Encryption.encrypt_password(params[:user][:password_confirmation], @user.salt)
 
-    respond_to do |format|  
-      if @user.save 
-        flash[:notice] = "Registered Successfully"
-        format.html { redirect_to root_path, :notice => "Registered successfully" }
-      else
-        format.html { render :action => "new" }  # doesn't execute the new method
-      end
+  respond_to do |format|  
+    if @user.save 
+      flash[:notice] = "Registered Successfully"
+      format.html { redirect_to root_path, :notice => "Registered successfully" }
+    else
+      format.html { render :action => "new" }  # doesn't execute the new method
     end
+  end
 end
 
 def save_password
