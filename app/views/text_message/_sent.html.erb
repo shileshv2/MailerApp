@@ -3,7 +3,7 @@
 		<p> No users </p> 
 	<% else %>
 		<% @user.each_with_index do |user, i| %>
-  			<p><label id="name<%=i%>" > <%= user.first_name %>
+  			<p><label id="name<%=i%>" > <%= user.first_name %> <%= user.last_name %>  (<%= user.email %>)
 			<%= check_box_tag "name[]", user.id, true %></label></p>
 			<% end %>
 		<%= submit_tag 'Send' %>

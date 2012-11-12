@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
+  #     products.resources :sales, :collection => { :recent => :get } 
   #   end
 
   # Sample resource route within a namespace:
@@ -33,7 +33,8 @@ ActionController::Routing::Routes.draw do |map|
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
    map.root :controller => "login"
    #map.resource :login, :member => { :perform_login => [:post, :get] }
-   map.resource :users 
+   map.resources :users , :member => { :change_password => :get }
+
     
    #map.connect '/perform_login', :controller => "login", :action => "perform_login"
   # See how all your routes lay out with "rake routes"

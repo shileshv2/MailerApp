@@ -1,7 +1,7 @@
 <div id="content">
 <p id="notice"><%= flash[:notice] %></p>
 <p id="alert"><%= flash[:alert] %></p>
-<% form_tag({:action => 'perform_login'}, :id => 'login_form', :method => :POST) do %>
+<% form_tag({:action => 'perform_login'}, :method => :POST) do %>
 
 <h1 > Sign in </h1>
 
@@ -10,6 +10,6 @@
 <%= submit_tag 'Login' %>
 <% end %>
 <br/><br/>
-New User? <%= link_to "Sign Up Now!", new_users_path %>
+New User? <%= link_to "Sign Up Now!", new_user_path %>
 
 </div>

@@ -1,0 +1,22 @@
+<div id="content">
+	<p id= "notice">
+		<%= flash[:notice] %>
+	</p>
+
+	<table>
+		<tr>
+			<th>First Name</th>
+			<th>Email</th>
+			<th>Birthdate</th>
+		</tr>
+		<% @users.each { |usr| %>
+		<tr>
+			<td><%= usr.first_name %></td>
+			<td><%= usr.email %> </td>
+			<td><%= usr.birthdate %></td>
+			<td><%= link_to "edit", edit_user_path(usr) %> </td>
+			<td><%= link_to "delete", usr, :method => :delete %> </td>
+		</tr>
+		<% } %>
+	</table>
+</div>

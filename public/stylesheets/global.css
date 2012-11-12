@@ -1,5 +1,5 @@
 body#admin_wrapper {
-	background-color: gray;
+	background-color: #6D7B8D;
 	color: white;
 	height: 100%;
 }
@@ -10,10 +10,11 @@ body#guest_wrapper {
 	color: #665544;	
 }
 
-#content {
+body, body#content {
 	font-family: Arial, Verdana, sans-serif;
 	text-align: center;
-	font-size : 16px;	
+	font-size : 16px;
+	color: #665544;	
 }
 
 
@@ -37,7 +38,8 @@ body#guest_wrapper {
 }
 
 #notice {
-   color: green;
+   color: #006400;
+   font-style: bold;
 }
 
 #logout {

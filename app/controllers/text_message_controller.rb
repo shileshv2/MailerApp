@@ -61,8 +61,9 @@ end
     htmltext = ""
 
     filter = params[:name]
-    for f in filter
-      puts "filter #{f} "
+    if (!filter.nil?)
+      for f in filter
+        puts "filter #{f} "
 
       @user.each_with_index do |usr, i|
         if usr.id == f.to_i
@@ -72,20 +73,19 @@ end
            @test = Notifier.deliver_message(t.text_message_subject, body, usr)
            htmltext += usr.first_name
            htmltext += "- pass<br/>"
-            #flash[:notice] = "Mail sent Successfully"
+          flash[:notice] = "Mail sent Successfully"
           rescue Exception => e
             #raise e if raise_delivery_errors
             puts "delivery error"
             htmltext += usr.first_name
             htmltext += "- <span style='color:red;font-weight: bold'> fail </span><br/>"
             flash[:error] = e.message
-
           end
         end
       end
       flash[:info] = htmltext
     end
+  end
       redirect_to :back
-    
   end 
 end
