@@ -7,12 +7,6 @@ class User < ActiveRecord::Base
    #validates_format_of :birthdate, :with => 
    validates_format_of :email, :with => /^(\S+)@(\S+)\.(\S+)$/
 
-   def self.authenticate(login, password)
-     user = find_by_login(login)
-    
-     return user
-   end
-
    def generate_salt 
      # self.salt = self.object_id.to_s + rand.to_s
       ActiveSupport::SecureRandom.base64(8)
@@ -31,4 +25,9 @@ class User < ActiveRecord::Base
     end
    end
 
+
+   def hasBday_today?
+      #@user = find(:all, :conditions => ["MONTH(birthdate)=? AND DAY(birthdate) = ?", Date.today.month, Date.today.day])
+      return (birthdate.month.eql?(Date.today.month) && birthdate.day.eql?(Date.today.day))
+   end
 end

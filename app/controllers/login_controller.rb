@@ -8,7 +8,6 @@ class LoginController < ApplicationController
   def perform_login
 
     @user = User.find(:first, :conditions => ["user_name = ?", params[:user][:user_name]])
-	 #@user = User.find(:first, :conditions => ["user_name = ? AND password = ?", params[:user][:user_name], hash_pswd])
 
      if @user.nil?
         flash[:alert] = "Invalid user"

@@ -4,7 +4,7 @@
 	<% else %>
 		<% @user.each_with_index do |user, i| %>
   			<p><label id="name<%=i%>" > <%= user.first_name %> <%= user.last_name %>  (<%= user.email %>)
-			<%= check_box_tag "name[]", user.id, true %></label></p>
+			<%= check_box_tag "chkbox_ids[]", user.id, true %></label></p>
 			<% end %>
 		<%= submit_tag 'Send' %>
 	<% end %>

@@ -27,10 +27,7 @@ end
 
 def new
   @user = User.new
- 
 end
-
-
 
 def edit
   @user = User.find_by_id(params[:id])
@@ -41,7 +38,6 @@ def update
 
   respond_to do |format|
     if @user.update_attributes(params[:user])
-      #format.html { redirect_to("/users/#{@user.user_type}" , :notice => 'User updated successfully')}
       format.html { render :template => "/users/#{session[:user].user_type}", :notice => 'User updated successfully' }
     else
       format.html { render :action => "edit" }
