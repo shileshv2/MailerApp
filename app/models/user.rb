@@ -1,3 +1,5 @@
+
+
 class User < ActiveRecord::Base
 
    validates_presence_of :user_name, :password
@@ -9,7 +11,7 @@ class User < ActiveRecord::Base
 
    def password_correct?(password_confirm)
     unless password_confirm.empty?
-      password == encrypt_password(password_confirm)
+      password == Encryption.encrypt_password(password_confirm, self.salt)
     end
    end
 
