@@ -1,4 +1,4 @@
-
+require 'Encryption'
 
 class User < ActiveRecord::Base
 

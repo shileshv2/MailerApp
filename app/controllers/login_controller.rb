@@ -18,8 +18,8 @@ class LoginController < ApplicationController
           session[:user_id] = @user.id
           render :template => "users/#{@user.user_type}"
         else  
-          flash[:alert] = "Username/password do not match"
-          redirect_to root_path, :alert => "Username/password do not match"
+          #flash.now[:alert] = "Username/password do not match"
+          redirect_to(root_path, :alert => "Username/password do not match")
         end
       end
   end

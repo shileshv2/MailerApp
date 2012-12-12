@@ -44,13 +44,16 @@ end
 def create
   @user = User.new(params[:user]) 
   @user.salt = Encryption.generate_salt
-  @user.password = Encryption.encrypt_password(params[:user][:password], @user.salt)
-  @user.password_confirmation = Encryption.encrypt_password(params[:user][:password_confirmation], @user.salt)
+
+  unless params[:user][:password].blank?
+    @user.password = Encryption.encrypt_password(params[:user][:password], @user.salt)
+    @user.password_confirmation = Encryption.encrypt_password(params[:user][:password_confirmation], @user.salt)
+  end
 
   respond_to do |format|  
     if @user.save 
-      flash[:notice] = "Registered Successfully"
-      format.html { redirect_to root_path, :notice => "Registered successfully" }
+      flash.now[:notice] = "Registered Successfully"
+      format.html { redirect_to root_path, flash.now[:notice] => "Registered successfully" }
     else
       format.html { render :action => "new" }  # doesn't execute the new method
     end

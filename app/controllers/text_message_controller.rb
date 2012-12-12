@@ -13,7 +13,7 @@ def authorize
 end
 
 def init
-  @message = TextMessageTemplate.find(:first)
+  @message = TextMessageTemplate.first
   @users = User.find(:all, :conditions => ["MONTH(birthdate)=? AND DAY(birthdate) = ?", Date.today.month, Date.today.day]); 
 end
 
@@ -24,12 +24,11 @@ def index
 end
 
 def save
-  template = TextMessageTemplate.find(:first)
+  template = TextMessageTemplate.first
 
   if template.nil?
-    @message = TextMessageTemplate.new
-    @message.text_message_subject = params[:text_message_template][:subject]
-    @message.text_message_body = params[:text_message_template][:body]
+    @message = TextMessageTemplate.new(params[:text_message_template])
+
     @message.sent_at = Time.now
     @message.save
   else
