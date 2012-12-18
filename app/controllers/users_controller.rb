@@ -16,7 +16,7 @@ def authorize
 end
 
 def index 
-     @users = User.find(:all)
+  @users = User.find(:all)
 end
 
 def new
@@ -55,6 +55,10 @@ def create
   respond_to do |format|  
     if @user.save 
       flash.now[:notice] = "Registered Successfully"
+      
+
+      # TODO: send confirmation email
+
       format.html { redirect_to root_path, flash.now[:notice] => "Registered successfully" }
     else
       format.html { render :action => "new" }  # doesn't execute the new method

@@ -8,74 +8,55 @@ describe User do
 	it "should create user with valid params" do
 		User.find_by_email("user@example.com").should be_nil
 		User.create @valid_params
-		User.find_by_email("user@example.com").user_name.should == "xyz"  # should fail
+		User.find_by_email("user@example.com").user_name.should == "Example user" 
 
 	end
 
 	it "when email format is invalid" do
-		@valid_params["email"] = "xyz"
-		#User.create(@valid_params)
-		#User.find_by_email("xyz").should be_nil	
+		@valid_params[:email] = "xyz"
+		user = User.create(@valid_params)
+		user.errors[:email].should == "is invalid"	
 		User.new.should_not be_valid
+
 	end
 
 	it "when username is not present" do
 		@valid_params[:user_name] = nil
-		User.create(@valid_params)
+		user = User.create(@valid_params)
+		user.errors_on(:user_name).should == ["can't be blank", "is too short (minimum is 5 characters)"]
 		User.find_by_email("user@example.com").should be_nil
 	end
 
 	it "when password is not present" do
 		@valid_params[:password] = nil
-		User.create(@valid_params)
+		user = User.create(@valid_params)
+		user.errors_on(:password).should == ["can't be blank"]
 		User.find_by_email("user@example.com").should be_nil
 	end
 
 
-	it "when name is too short" do
+	it "when username is too short" do
 		@valid_params[:user_name] = "a"
-		User.create @valid_params
-		User.find_by_email("user@example.com").should be_nil
+		user = User.create @valid_params
+		user.errors_on(:user_name).should == ["is too short (minimum is 5 characters)"]
+		User.find_by_email("user@example.com").should be_nil	
 	end
 
-	it "user with same name" do
+	it "user with duplicate username" do
 		duplicate_username = @valid_params.dup
 		User.create @valid_params
 		User.find_by_email("user@example.com").should_not be_nil
-		User.create duplicate_username
+		user = User.create duplicate_username
 		#User.count { |rec| rec.email == "user@example.com"}.should == 1
+		user.errors_on(:user_name).should == ["has already been taken"]
 		User.count(:conditions => "email='user@example.com'").should == 1
 		expect 
 	end	
 
 	it "when password doesn't match confirmation" do
 		@valid_params[:password_confirmation] = 'mismatch'
-		User.create @valid_params
+		user = User.create @valid_params
+		user.errors_on(:password).should == ["doesn't match confirmation"]
 		User.find_by_email("user@example.com").should be_nil
 	end
 end
-
-
-
- 
-
-
-	# subject { @user }
-
-	# it { should be_valid } 
-
-	# describe "when username is not present" do
-	# 	before { @user.user_name = "" }
-	# 	it { should_not be_valid }
-	# end
-
-	# describe "when password is not present" do
-	# 	before { @user.password = "" }
-	# 	it { should_not be_valid }
-	# end
-
-	# describe "when name is too short" do
-	# 	before { @user.user_name = "a" }
-	# 	it { should_not be_valid }
-	# end
-
