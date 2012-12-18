@@ -1,3 +1,5 @@
+require 'Encryption'
+
 class User < ActiveRecord::Base
 
    validates_presence_of :user_name, :password
@@ -7,28 +9,16 @@ class User < ActiveRecord::Base
    #validates_format_of :birthdate, :with => 
    validates_format_of :email, :with => /^(\S+)@(\S+)\.(\S+)$/
 
-   def self.authenticate(login, password)
-     user = find_by_login(login)
-    
-     return user
-   end
-
-   def generate_salt 
-     # self.salt = self.object_id.to_s + rand.to_s
-      ActiveSupport::SecureRandom.base64(8)
-   end
-
-   def encrypt_password(password)
-    unless salt.nil?
-      Digest::SHA2.hexdigest(password + salt) 
-    end   
-   end
-
-
    def password_correct?(password_confirm)
-    unless password_confirm.empty?
-      password == encrypt_password(password_confirm)
+    unless (password_confirm.nil?)
+      if !self.salt.nil?
+        password == Encryption.encrypt_password(password_confirm, self.salt)
+      end
     end
    end
 
+
+   def hasBday_today?
+      return (birthdate.month.eql?(Date.today.month) && birthdate.day.eql?(Date.today.day))
+   end
 end

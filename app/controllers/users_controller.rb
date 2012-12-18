@@ -1,4 +1,8 @@
+require 'Encryption'
+
 class UsersController < ApplicationController
+ 
+
 before_filter :authorize, :only => [:show]
 
 def authorize
@@ -11,60 +15,55 @@ def authorize
   end
 end
 
-
 def index 
-     @users = User.find(:all)
+  @users = User.find(:all)
 end
-
-
-
-def show
-
-
-end
-
-
 
 def new
   @user = User.new
- 
 end
-
-
 
 def edit
   @user = User.find_by_id(params[:id])
 end
 
 def update
-  @user = User.find(params[:id])
-
-  respond_to do |format|
-    if @user.update_attributes(params[:user])
-      #format.html { redirect_to("/users/#{@user.user_type}" , :notice => 'User updated successfully')}
-      format.html { render :template => "/users/#{session[:user].user_type}", :notice => 'User updated successfully' }
-    else
-      format.html { render :action => "edit" }
-    end
+  begin
+    @user = User.find(params[:id])
+    respond_to do |format|
+      if !@user.nil? && @user.update_attributes(params[:user])
+        format.html { render :template => "/users/#{session[:user].user_type}", :notice => 'User updated successfully' }
+      else
+       format.html { render :action => "edit" }
+      end
+    end 
+  rescue ActiveRecord::RecordNotFound
   end
 end
 
 
 
 def create
-    @user = User.new(params[:user]) 
-    @user.salt = @user.generate_salt
-    @user.password = @user.encrypt_password(params[:user][:password])
-    @user.password_confirmation = @user.encrypt_password(params[:user][:password_confirmation])
+  @user = User.new(params[:user]) 
+  @user.salt = Encryption.generate_salt
 
-    respond_to do |format|  
-      if @user.save 
-        flash[:notice] = "Registered Successfully"
-        format.html { redirect_to root_path, :notice => "Registered successfully" }
-      else
-        format.html { render :action => "new" }  # doesn't execute the new method
-      end
+  unless params[:user][:password].blank?
+    @user.password = Encryption.encrypt_password(params[:user][:password], @user.salt)
+    @user.password_confirmation = Encryption.encrypt_password(params[:user][:password_confirmation], @user.salt)
+  end
+
+  respond_to do |format|  
+    if @user.save 
+      flash.now[:notice] = "Registered Successfully"
+      
+
+      # TODO: send confirmation email
+
+      format.html { redirect_to root_path, flash.now[:notice] => "Registered successfully" }
+    else
+      format.html { render :action => "new" }  # doesn't execute the new method
     end
+  end
 end
 
 def save_password

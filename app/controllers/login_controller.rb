@@ -8,7 +8,6 @@ class LoginController < ApplicationController
   def perform_login
 
     @user = User.find(:first, :conditions => ["user_name = ?", params[:user][:user_name]])
-	 #@user = User.find(:first, :conditions => ["user_name = ? AND password = ?", params[:user][:user_name], hash_pswd])
 
      if @user.nil?
         flash[:alert] = "Invalid user"
@@ -19,8 +18,8 @@ class LoginController < ApplicationController
           session[:user_id] = @user.id
           render :template => "users/#{@user.user_type}"
         else  
-          flash[:alert] = "Username/password do not match"
-          redirect_to root_path, :alert => "Username/password do not match"
+          #flash.now[:alert] = "Username/password do not match"
+          redirect_to(root_path, :alert => "Username/password do not match")
         end
       end
   end
