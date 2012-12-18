@@ -10,8 +10,10 @@ class User < ActiveRecord::Base
    validates_format_of :email, :with => /^(\S+)@(\S+)\.(\S+)$/
 
    def password_correct?(password_confirm)
-    unless password_confirm.empty?
-      password == Encryption.encrypt_password(password_confirm, self.salt)
+    unless (password_confirm.nil?)
+      if !self.salt.nil?
+        password == Encryption.encrypt_password(password_confirm, self.salt)
+      end
     end
    end
 

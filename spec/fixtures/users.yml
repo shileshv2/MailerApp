@@ -1,10 +1,20 @@
 
 user1:
   id: 1
-  first_name: user1
-  last_name: user1
-  birthdate:  3-4-1944
   email: user1@v2solutions.com
-  phone_number: 8797979
+  user_type: guest
+  password: 978939a01303dda23391a057d3a869a9f0ae4be1e132dfceb3555eac75a0df90
+  user_name: user1
+  salt: TNskIs2k6SA=
 		
 
+user2:
+  id: 2
+  birthdate:  3-4-1944
+  email: user1@v2solutions.com
+  user_type: admin
+  phone_number: 8797979
+  password: 978939a01303dda23391a057d3a869a9f0ae4be1e132dfceb3555eac75a0df90
+  user_name: admin
+  salt: TNskIs2k6SA=
+		

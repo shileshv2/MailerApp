@@ -28,14 +28,16 @@ def edit
 end
 
 def update
-  @user = User.find(params[:id])
-
-  respond_to do |format|
-    if @user.update_attributes(params[:user])
-      format.html { render :template => "/users/#{session[:user].user_type}", :notice => 'User updated successfully' }
-    else
-      format.html { render :action => "edit" }
-    end
+  begin
+    @user = User.find(params[:id])
+    respond_to do |format|
+      if !@user.nil? && @user.update_attributes(params[:user])
+        format.html { render :template => "/users/#{session[:user].user_type}", :notice => 'User updated successfully' }
+      else
+       format.html { render :action => "edit" }
+      end
+    end 
+  rescue ActiveRecord::RecordNotFound
   end
 end
 

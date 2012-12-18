@@ -8,6 +8,7 @@ describe UsersController do
 			post :create, :user => {:user_name => 'rashmi', :email => 'rashmi.agarwal@in.v2solutions.com'}
 			response.should render_template('users/new')
 		end	
+		
 
 		it "should create user successfully" do
 			expect{
@@ -18,6 +19,12 @@ describe UsersController do
 		end
 	end
 
+	it "#index" do
+		get :index
+		response.should render_template('index')
+	end
+
+
 	describe "updates the user" do
 	
 		fixtures :users
@@ -26,19 +33,21 @@ describe UsersController do
 			@users = users(:user1)
 		end
 		
-		it "should update user succesfully" do
+		it "should update user succesfully" do	
 			session[:user] = @users
-			#post :update, :user => { :id => '1', :first_name => 'user1', :last_name => 'user1', :birthdate => '3/4/1944', :email => 'user1@v2solutions.com', 
-			# :phone_number => '8797979' }
-			#@users.email = "user1@gmail.com"
-			post :update, :id => 1
-			User.new.email.should == "user1@gmail.com"
-			response.should render_template('users/guest')
+			User.stub(:find).and_return(@users)
+			#@users.should_receive(:update_attributes).with("email" => "new_email@gmail.com").and_return(:true)
+
+			put :update, :id => 1, :user => { :email => "new_email@gmail.com"}
+			@users.email.should == "new_email@gmail.com"
+			response.should render_template('/users/guest')
 		end
 
-		it "should not update user" do
-			
-		end
+		# it "should not update user" do
+		# 	put :update, :id => 3, :user => { :email => "new_email@gmail.com"}
+		# 	response.should render_template("/edit")
+		# end	
 	end
+
 
 end
