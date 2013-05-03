@@ -59,4 +59,19 @@ describe User do
 		user.errors_on(:password).should == ["doesn't match confirmation"]
 		User.find_by_email("user@example.com").should be_nil
 	end
+
+
+  describe 'birthday' do
+    before(:each) do
+      @params = {:user_name => "Example user", :email => "user@example.com", :password => "example", :birthdate => "05/02/2013"}
+      @user=User.create(@params)
+    end
+
+    it "should return today's day and month" do
+      @user. birthdate.month.to_s.should ==  "5"
+      @user.birthdate.day.to_s.should ==  "2"
+    end
+    
+  end
+
 end

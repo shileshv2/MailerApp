@@ -43,6 +43,13 @@ describe UsersController do
 			@user.email.should == "new_email@gmail.com"
 			response.should render_template('/users/guest')
 		end
+
+    it "update user unsuccessful" do
+      session[:user] =@user
+      put :update, :id =>1, :user => { :email =>''}
+      response.should render_template('edit')
+    end
+    
 	end
 
 	describe "delete user" do
@@ -59,4 +66,16 @@ describe UsersController do
 			}.should change(User, :count).by(-1)
 		end
 	end
+
+  it "new" do
+    get :new
+    response.should render_template('new')
+  end
+
+  it "edit" do
+    get :edit
+    response.should render_template('edit')
+  end
+
+  
 end
