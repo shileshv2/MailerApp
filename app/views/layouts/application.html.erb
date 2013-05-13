@@ -5,6 +5,7 @@
 <%= stylesheet_link_tag 'global' if params %>
 <%= javascript_include_tag :defaults %>
 <%= javascript_include_tag "global.js" %>
+<%= init_tinymce_hammer_if_required %>
 </head>
 
 	<% if session[:user_id] %>

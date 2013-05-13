@@ -1,6 +1,9 @@
 class TextMessageController < ApplicationController
+
 before_filter :authorize, :only => [:index, :send_email]
 before_filter :init, :only => [:index, :send_email]
+before_filter :initialize_tinymce
+
 
 def authorize
  	unless User.find_by_id(session[:user_id])
@@ -25,10 +28,9 @@ end
 
 def save
   template = TextMessageTemplate.first
-
+  
   if template.nil?
-    @message = TextMessageTemplate.new(params[:text_message_template])
-
+    @message = TextMessageTemplate.new(:text_message_body => params[:text_message_template][:body], :text_message_subject =>params[:text_message_template][:subject])
     @message.sent_at = Time.now
     @message.save
   else
@@ -75,5 +77,5 @@ def send_email
     }
   end
 end
-end
 
+end

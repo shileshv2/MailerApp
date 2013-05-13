@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
    #validates_format_of :birthdate, :with => 
    validates_format_of :email, :with => /^(\S+)@(\S+)\.(\S+)$/
 
+
    def password_correct?(password_confirm)
     unless (password_confirm.nil?)
       if !self.salt.nil?
@@ -21,4 +22,17 @@ class User < ActiveRecord::Base
    def hasBday_today?
       return (birthdate.month.eql?(Date.today.month) && birthdate.day.eql?(Date.today.day))
    end
+
+   def self.send_email_through_delayed_jobs
+     template= TextMessageTemplate.first
+     all_users= User.find_all_by_birthdate(Date.today)
+     unless all_users.empty?
+       all_users.each do |user|
+         body = "Happy Birthday #{user.first_name}!!! #{template.text_message_body}"
+         #Notifier.send_later(:deliver_message, template.text_message_subject, body , user)
+         Notifier.delay.deliver_message(template.text_message_subject, body , user)
+       end
+     end
+   end
+   
 end
