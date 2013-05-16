@@ -1,0 +1,13 @@
+  <div id="Logo">
+    <div class='Logo-header'><%= "Add Logo" %></div>
+    <div class="Logo-content">
+        <% form_tag({:action =>'load_image'},  :multipart => true ) do  %>
+        <p>
+          <label>Upload Image To Template<br/>
+          <%= file_field_tag :uploaded_image %>
+          </label>
+        </p>
+        <p> <%= submit_tag "Save" %> </p>
+        <% end %>
+     </div>
+  </div>

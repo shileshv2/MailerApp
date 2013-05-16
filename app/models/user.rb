@@ -26,11 +26,11 @@ class User < ActiveRecord::Base
    def self.send_email_through_delayed_jobs
      template= TextMessageTemplate.first
      all_users= User.find_all_by_birthdate(Date.today)
+     image= UploadImage.first
      unless all_users.empty?
        all_users.each do |user|
          body = "Happy Birthday #{user.first_name}!!! #{template.text_message_body}"
-         #Notifier.send_later(:deliver_message, template.text_message_subject, body , user)
-         Notifier.delay.deliver_message(template.text_message_subject, body , user)
+         Notifier.delay.deliver_message(template.text_message_subject, body , user, image.uploaded_image_file_name)
        end
      end
    end

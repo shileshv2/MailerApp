@@ -7,6 +7,6 @@
   		<%= text_field :text_message_template, :subject, :value => @message.text_message_subject %>
   	</label>
   </p>
-  <p><%= tinymce :text_message_template, :body, :value => @message.text_message_body %></p>
+    <p><%= tinymce :text_message_template, :body, :value => get_text_message_template_body%></p>
   <p> <%= submit_tag "Save" %> </p>
   <% end %>

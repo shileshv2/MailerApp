@@ -2,7 +2,8 @@ class TextMessageController < ApplicationController
 
 before_filter :authorize, :only => [:index, :send_email]
 before_filter :init, :only => [:index, :send_email]
-before_filter :initialize_tinymce
+before_filter :initialize_tinymce, :only => :index
+before_filter :get_email_body, :only => [:index, :send_email]
 
 
 def authorize
@@ -20,7 +21,7 @@ def init
   @users = User.find(:all, :conditions => ["MONTH(birthdate)=? AND DAY(birthdate) = ?", Date.today.month, Date.today.day]); 
 end
 
-def index 
+def index
   if @message.nil?
     @message = TextMessageTemplate.new
   end
@@ -28,7 +29,7 @@ end
 
 def save
   template = TextMessageTemplate.first
-  
+
   if template.nil?
     @message = TextMessageTemplate.new(:text_message_body => params[:text_message_template][:body], :text_message_subject =>params[:text_message_template][:subject])
     @message.sent_at = Time.now
@@ -51,7 +52,7 @@ def sendwish(userid)
 
   if user.hasBday_today?
     begin
-      Notifier.deliver_message(@message.text_message_subject, body, user)
+      Notifier.deliver_message(@message.text_message_subject, body, user, @image_body.uploaded_image_file_name)
       htmltext += user.first_name
       htmltext += "- pass<br/>"
       flash[:notice] = "Mail sent Successfully"
@@ -77,5 +78,32 @@ def send_email
     }
   end
 end
+
+def load_image
+    image= UploadImage.first
+    @load_image= params[:uploaded_image].original_filename
+    if image.nil?
+      @image= UploadImage.new(:uploaded_image_file_name => params[:uploaded_image].original_filename)
+      @image.save
+    else
+      image.update_attributes(
+      :uploaded_image_file_name => params[:uploaded_image].original_filename
+      )
+    end
+    save_image_to_directory(params[:uploaded_image])
+    flash[:notice] = "Image Uploaded"
+    redirect_to '/text_message/index'
+ end
+
+  def save_image_to_directory(upload)
+    File.open(Rails.root.join('public', 'images', upload.original_filename), 'w') do |file|
+      file.write(upload.read)
+    end
+  end
+  
+
+  def get_email_body
+   @image_body= UploadImage.first
+  end
 
 end

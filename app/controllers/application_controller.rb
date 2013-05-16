@@ -12,10 +12,6 @@ class ApplicationController < ActionController::Base
     initialize_tinymce_with 'tinymce_for_text_message.rb'
   end
 
-  def initialize_tinymce_for_marketing_campaigns
-    initialize_tinymce_with 'tinymce_hammer_marketing_campaigns.rb'
-  end
-
   def initialize_tinymce_with(file)
     eval File.open(Rails.root.join('config','initializers',file)).read
   end
