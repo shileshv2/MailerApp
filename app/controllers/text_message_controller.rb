@@ -42,7 +42,7 @@ def save
       )
   end
   flash[:notice] = "Template Updated"
-  redirect_to '/text_message/index' 
+  redirect_to '/text_message/index'
 end
 
 def sendwish(userid)
@@ -79,6 +79,10 @@ def send_email
   end
 end
 
+def upload_image
+  render :partial => 'logo'
+end
+
 def load_image
     image= UploadImage.first
     @load_image= params[:uploaded_image].original_filename
@@ -92,7 +96,7 @@ def load_image
     end
     save_image_to_directory(params[:uploaded_image])
     flash[:notice] = "Image Uploaded"
-    redirect_to '/text_message/index'
+    render :partial => "response"
  end
 
   def save_image_to_directory(upload)
