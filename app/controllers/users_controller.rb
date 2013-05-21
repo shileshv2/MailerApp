@@ -3,7 +3,7 @@ require 'Encryption'
 class UsersController < ApplicationController
  
 
-before_filter :authorize, :only => [:show]
+#before_filter :authorize, :only => [:show]
 
 def authorize
  	unless User.find_by_id(session[:user_id])

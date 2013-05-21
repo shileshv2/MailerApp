@@ -32,4 +32,12 @@ describe LoginController do
 		post :perform_login, :user => {:user_name => 'wrong user'}
 		response.flash[:alert].should == "Invalid user"
 	end
+
+  it "should logout user" do
+    post :logout, :user => {:user_name => @user.user_name, :password => 'password'}
+    response.session[:user_id]= nil
+    response.flash[:notice].should == "You have successfully logged out"
+    response.should redirect_to(root_url)
+  end
+
 end

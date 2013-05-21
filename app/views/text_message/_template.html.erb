@@ -7,6 +7,12 @@
   		<%= text_field :text_message_template, :subject, :value => @message.text_message_subject %>
   	</label>
   </p>
-  <p><%= text_area :text_message_template, :body, :value => @message.text_message_body %></p>
-  <p> <%= submit_tag "Save" %> </p>
+  <p>
+  <label for="marketing_campaign_body">Email Content
+    <%= link_to 'Add your Logo in Settings: Branding', upload_image_url_for, :class => 'upload_image_link', :onclick => " return false;" %>
+      <%= render :partial => 'text_message/image_modal_js' %>
+  </label>
+ </p>
+    <p><%= tinymce :text_message_template, :body, :value => get_text_message_template_body%></p>
+  <p> <%= submit_tag "Save", :class => "save_image"%> </p>
   <% end %>

@@ -3,8 +3,10 @@
 <head>
 <title>Birthday Mailer</title>
 <%= stylesheet_link_tag 'global' if params %>
-<%= javascript_include_tag :defaults %>
-<%= javascript_include_tag "global.js" %>
+<%= javascript_include_tag :defaults, 'jquery-1.7.1', 'prototype-1.7.1' %>
+<%= javascript_include_tag "global.js", "jquery.colorbox.js" %>
+<%= stylesheet_link_tag 'jquery-ui', 'colorbox' %>
+<%= init_tinymce_hammer_if_required %>
 </head>
 
 	<% if session[:user_id] %>
@@ -22,8 +24,7 @@
 	<% end %>
 	<%= yield%>
 	</body>
-</div>
+
 
 
 </html>
-

@@ -1,0 +1,39 @@
+
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    
+    uploadImageModalColorbox();
+    function uploadImageModalColorbox() {
+
+      var uploadImageModalLink = jQuery('.upload_image_link');
+      
+      uploadImageModalLink.click(function() {
+        jQuery.colorbox({
+          height:        '300px',
+          width:         '500px',
+          inner_width:   '280px',
+          opacity:       0.4,
+          transition:    'elastic',
+          speed:         500,
+          inline:        false,
+          photo:         false,
+          iframe:        true,
+          escKey:        true,
+          overlayClose:  true,
+          scrolling:     false,
+          href:          uploadImageModalLink.attr('href'),
+          title:         '<h2>Logo</h2>',
+          id:            true,
+          onLoad:        function() {
+            jQuery('#cboxClose').unbind();
+            jQuery('#cboxClose').click(function() {
+              jQuery.colorbox.close();
+            });
+          },
+          onClosed:function(){ location.reload(true); }
+        });
+      });
+    }
+
+  });
+</script>
