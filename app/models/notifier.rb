@@ -10,11 +10,14 @@ class Notifier < ActionMailer::Base
     part "text/html" do |p|
            p.body = render_message("text_html", :email_body => get_email_body(email_body), :image => uploaded_image, :user => user)
     end
-    
+
+   if RAILS_ENV!= "test"
+
     inline_attachment :content_type => "image/jpeg",
     :body => File.read("#{RAILS_ROOT}/public/images/#{uploaded_image}"),
     :filename => "#{uploaded_image}",
     :cid => "#{uploaded_image}"
+   end
 
   end
 

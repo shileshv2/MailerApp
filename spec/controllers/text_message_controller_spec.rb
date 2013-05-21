@@ -15,6 +15,14 @@ describe TextMessageController do
     get :authorize
     response.should redirect_to root_path
   end
+
+  it "should render text unauthorized access for guest" do
+    @user = users(:user1)
+    session[:user_id] = @user.id
+    session[:user] = @user
+    get :authorize
+    response.body.should == 'Unauthorized access'
+  end
     
  end
   
