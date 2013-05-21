@@ -4,5 +4,6 @@ class ChangeTextMessageBodyColumnType < ActiveRecord::Migration
   end
 
   def self.down
+    change_column :text_message_templates, :text_message_body, :string
   end
 end

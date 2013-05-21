@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
 
   def initialize_tinymce
+    #Link to tinymce used: https://github.com/trevorrowe/tinymce_hammer/
     initialize_tinymce_with 'tinymce_for_text_message.rb'
   end
 

@@ -2,7 +2,7 @@ class Notifier < ActionMailer::Base
 
   def message(sub, email_body, user, uploaded_image)
     recipients user.email
-    from "rashmiagar@gmail.com"
+    from "test123@domain.com"
     subject sub
     sent_on Time.now
     content_type "multipart/mixed"

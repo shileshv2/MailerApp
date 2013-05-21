@@ -7,16 +7,15 @@ describe TextMessageController do
     fixtures :users
 
 		before :each do
-			@user = users(:user1)
+			@user = users(:user2)
 		end
     
-  it "authorize" do
-    session[:user]= @user
-    session[:user].user_type == "guest"
-    render_template(:text => 'Unauthorized access')
+  it "should redirect to root" do
+    session[:user] = @user
+    get :authorize
+    response.should redirect_to root_path
   end
+    
  end
-  
-
   
 end

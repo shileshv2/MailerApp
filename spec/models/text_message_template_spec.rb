@@ -8,7 +8,7 @@ describe TextMessageTemplate do
 
   it "should create text message template with valid params" do
     @template.save!
-    @template.errors.each{|params| p params; p params.message}
+    TextMessageTemplate.find_by_text_message_subject("Example Text Message subject").text_message_body.should == "Example Text Message body"
   end
   
   it "should not be valid with empty text message body" do
